@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reconhecimento de voz</title>
+</head>
+
+    <style>
+        body { background: #242020; font-family: sans-serif; width: 100%; text-align: center; }
+        h1 { text-align: center; color: #fff; }
+        input { text-align: center; padding: .5rem; width: 500px; }
+    </style>
+
+<body>
+
+<h1>reconhecimento <br> de voz</h1>
+
+<input type="text" readonly id="voz" name="voz">
+
+
+<script>
+
+const inputMessage = document.getElementById('voz');
+
+function reconhecimentoVoz()
+{
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const recognation = new SpeechRecognition();
+    recognation.interimResults = true;
+
+    recognation.addEventListener('result', e => {
+
+        let text = Array.from(e.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+        .join('');
+
+        inputMessage.value = text
+
+    }); 
+    recognation.start();
+}
+
+inputMessage.onclick = ()=> {
+    reconhecimentoVoz();
+}
+
+</script>    
+</body>
+</html>
